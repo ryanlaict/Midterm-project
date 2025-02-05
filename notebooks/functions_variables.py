@@ -1,16 +1,11 @@
 def encode_tags(df):
+    """
+    One-hot encode the 'tags' column.
 
-    """Use this function to manually encode tags from each sale.
-    You could also provide another argument to filter out low 
-    counts of tags to keep cardinality to a minimum.
-       
     Args:
-        pandas.DataFrame
+        df (pandas.DataFrame): The DataFrame containing a 'tags' column.
 
     Returns:
-        pandas.DataFrame: modified with encoded tags
+        pandas.DataFrame: Modified with encoded tag columns.
     """
-    tags = df["tags"].tolist()
-    # create a unique list of tags and then create a new column for each tag
-        
-    return df
+    return df.join(df["tags"].str.get_dummies(sep=", ")).drop(columns=["tags"])
