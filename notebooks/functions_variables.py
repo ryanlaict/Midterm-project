@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import ast
 
 def encode_tags(df):
     """
@@ -11,6 +12,10 @@ def encode_tags(df):
     Returns:
         pandas.DataFrame: Modified with encoded tag columns.
     """
+    # Convert lists to comma-separated strings
+    df["tags"] = df["tags"].apply(lambda x: ", ".join(x) if isinstance(x, list) else x)
+
+    # Apply one-hot encoding
     return df.join(df["tags"].str.get_dummies(sep=", ")).drop(columns=["tags"])
 
 def encode_primary_photo(df):
@@ -35,22 +40,17 @@ def encode_primary_photo(df):
 def encode_source(df):
     """
     Creates two new binary columns:
-    - 'agent': 1 if 'agents' exist, 0 otherwise.
-    - 'mls': 1 if 'source' type is 'mls', 0 otherwise.
+    - 'agent': 1 if 'agents' exist and are not None, 0 otherwise.
+    - 'mls': 1 if 'type' exists and is not None, 0 otherwise.
     
     Then, drops the original 'source' column.
-
-    Args:
-        df (pandas.DataFrame): The input DataFrame containing 'source'.
-
-    Returns:
-        pandas.DataFrame: Modified DataFrame with 'agent' and 'mls' columns.
     """
-    # Create 'agent' column: 1 if 'agents' is found in the string and is not None, else 0
-    df['agent'] = df['source'].apply(lambda x: 0 if not isinstance(x, str) or "'agents': None" in x else 1)
+    # Convert string-based dictionaries to actual dictionaries
+    df['source'] = df['source'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 
-    # Create 'mls' column: 1 if 'type' is found in the string and is not None, else 0
-    df['mls'] = df['source'].apply(lambda x: 0 if not isinstance(x, str) or "'type': None" in x else 1)
+    # Check for 'agents' and 'type' keys
+    df['agent'] = df['source'].apply(lambda x: 1 if isinstance(x, dict) and x.get('agents') else 0)
+    df['mls'] = df['source'].apply(lambda x: 1 if isinstance(x, dict) and x.get('type') else 0)
 
     # Drop the original 'source' column
     df.drop(columns=['source'], inplace=True)
@@ -86,3 +86,13 @@ def extract_city_state(df):
     df.drop(columns=['permalink'], inplace=True)
     
     return df
+
+def categorize_cost_of_living(score):
+    if score < 100:
+        return 'Low'
+    elif 100 <= score <= 120:
+        return 'Average'
+    elif 120 < score <= 150:
+        return 'High'
+    else:
+        return 'Very High'
