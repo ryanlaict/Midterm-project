@@ -1,6 +1,8 @@
 import pandas as pd
 import re
 import ast
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
 
 def encode_tags(df):
     """
@@ -96,3 +98,28 @@ def categorize_cost_of_living(score):
         return 'High'
     else:
         return 'Very High'
+
+def evaluate_model(model, X_test, y_test):
+    """Prints MAE, RMSE, and R² for a given model"""
+    y_pred = model.predict(X_test)
+    
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+
+    print(f"{model.__class__.__name__}:")
+    print(f"  MAE:  {mae:.4f}")
+    print(f"  RMSE: {rmse:.4f}")
+    print(f"  R²:   {r2:.4f}\n")
+
+def evaluate_poly_model(y_true, y_pred, dataset_name):
+    mae = mean_absolute_error(y_true, y_pred)
+    mse = mean_squared_error(y_true, y_pred)
+    r2 = r2_score(y_true, y_pred)
+    rmse = np.sqrt(mse)
+
+    print(f"\nPolynomial Regression Model - {dataset_name} Metrics:")
+    print(f"MAE: {mae:.4f}")
+    print(f"MSE: {mse:.4f}")
+    print(f"R²: {r2:.4f}")
+    print(f"RMSE: {rmse:.4f}")
