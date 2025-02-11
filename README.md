@@ -2,7 +2,7 @@
 
 ## Project/Goals
 
-The goal of this project is to develop a model to predict the selling price of a house based the house's features as well as the demographic region of the house. 
+The goal of this project is to develop a model to predict the selling price of a house based the house's features as well as how the region's features affect the selling price, such as total population, cost of living and demographics. 
 
 ## Process
 ### Step 1: Importing Datasets
@@ -14,7 +14,7 @@ The goal of this project is to develop a model to predict the selling price of a
 ### Step 4: Model Testing & Evaluation
 - Next in our process was to test our dataset across various models. We used Linear regression with Lasso and Ridge, several versions of SVR, a random forest regression as well as two XG boost models. We iterated through them with cross-validation to find the best scores possible for each model. We found that after testing the various models that the Random Forest Model had the highest score. 
 ### Step 5: Building Pipeline
-- The first step was definining each function of our pipeline. We started with a cross-validation function, which would split our dataset into an identified number of folds. The next was a hyperparameter function, the purpose of that was to iterate through a parameter grid to find the best parameters for our dataset and model. Then fit a model with the best parameters and to finally make a prediction. We utilized RandomForest and XGBoost to compare and evaluate the outputs from our tests. Again we found that RandomForest gave us the best result, so that was the model we ultimately tuned for and saved.
+- The first step was definining each function of our pipeline. We started with a cross-validation function, which would split our dataset into an identified number of folds. The next was a hyperparameter function, the purpose of that was to iterate through a parameter grid to find the best parameters for our dataset and model. Then fit a model with the best parameters  to finally make a prediction. We utilized RandomForest and XGBoost to compare and evaluate the outputs from our tests. Again we found that RandomForest gave us the best result, so that was the model we ultimately tuned for and saved.
 
 
 ## Results
@@ -28,8 +28,9 @@ Our top performing model was a Random Forest Regressor. Based on the data that w
 
 
 ## Future Goals
-- Collect more data on the houses. The more data we have, the better our model will be at predicting the selling price of a house. This includes more house sales, more information on the features of the house, as well as more information on the regional data. 
-- Use a differnt model. The model that we used was a baseline model and it was not the best model for the task. With more time, we could explore other models that would be better suited for the task. 
+- Collect more data on the houses. The more data we have, the better our model will be at predicting the selling price of a house. This includes more house sales, more information on the features of the house, as well as more information on the regional data.
+- With more time, we would like to build a pipeline that will be able to take raw data in the JSON form and process/clean the data, split the dataset and fit it based on our set parameters. 
+- Use a different model. The model that we used was a baseline model and it was not the best model for the task. With more time, we could explore other models that would be better suited for the task. 
 - We obviously attacked this as a regression problem, but it would have been interesting to see how this could have worked as a categorization model. Building an unsupervised learning model to find trends in housing data outside of the ones predicted in this model. 
 - Use a different way of dealing with the imbalanced dataset. We used a random sample of the data to make the dataset more balanced. However, this is not the best way of dealing with an imbalanced dataset and there are other methods that could be used. 
 - Use a different way of dealing with the multicolinearity. We used a PCA to reduce the dimensionality of the data. However, this is not the best way of dealing with multicolinearity and there are other methods that could be used.
