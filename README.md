@@ -22,8 +22,11 @@ Our top performing model was a Random Forest Regressor. Based on the data that w
 
 ## Challenges 
 1.) The first challenge was the large amount of null values in the dataset. Many columns were null or had to be dropped. While, the data was still useable, this impact the level of detail and information that we were able to obtain from the dataset.The feature set also contained a number of null values. While features that were not present were zero, we had to make assumptions with the features in order to keep the information available. 
+
 2.) The second challenge was the way the dataset was structured. The initial dataset was structured with over 300 columns. This meant that we were limited to using only a few features to train our model or having to run many different models and feature selections to find the best one. The columns were also extremely redundant, leading to many of the columns having strong multicolinearity. We had to sift through that data and clean it up prior to being able to train our model effectively. 
+
 3.) Imbalanced dataset. The dataset was imbalanced with the number of houses being sold vs being listed. This represents a chalenge for us to be able to accurately train our model on the final selling price of a house as it is not representative of all housing data in the region.
+
 4.) Since this data contained cities from the entire country, this meant we were really broadening the scope of the model. Trying to determine what affects a home price in Manhattan while also affecting a home price in Juneau, Alaska meant potentially removing some features that are regionally important. This is an assumption that was not tested in our process, however.
 
 
